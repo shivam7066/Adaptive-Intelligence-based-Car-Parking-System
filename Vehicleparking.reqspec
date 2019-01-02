@@ -1,0 +1,82 @@
+system requirements VehicleParking : "Vehicle parking" for integration :: VehicleParking.impl[
+	val syn_data = 20 ns 
+	val distancecal = 32 
+	val accspeed = 30  
+	val initialdata = 55 	
+	val env_data = 55  
+	val SpeedLimit:real 
+	val speedstatus:real
+	val metadata = 40 ms
+
+	requirement req1 : "Realtime data must be available through sensor input" 
+	[
+		description "static and dynamic data should be synchronized at regular intervals"
+		value predicate metadata < data
+		issues "Integrity Level 2"
+		//Defect Category-Dataavailability
+	]
+	
+	requirement req2 : "Data should be available to all modules for the all time" 
+	[
+		description "Data Information should be available"
+		value predicate speedLimit == true
+		issues "Integrity Level 3"
+		//Defect Category-Dataavailability
+	]
+	
+	requirement req3 : "Speed along with location will be updated accurately"
+	[
+		description "In expected limit the redundant data sensors should be there."
+		compute speedstatus
+		value predicate speedstatus == accspeed - distancecal 
+		issues "Integrity Level 1"
+		//Defect Category-Dataavailability
+	]
+	requirement req4 : "synchronized data availablity"
+	[
+		description "synchronized data should be available to management and driver all the time"
+		val speed = speedLimit
+		issues "Integrity Level 4"
+		//Defect Category-SystemPerformance
+	]
+	
+	requirement req5 : "The Roadway  datasensor information" 
+	[
+		description "There is no sudden variations in the sensor information"
+		value predicate envStat == initialdata - env_data
+		issues "Integrity Level 4"
+		//Defect Category-Dataavailability		
+	]
+
+		
+	requirement req6 : "The data Limit" 
+	[
+		description "The vehicular data should be in threshold limit"
+		compute envStat
+		issues "Integrity Level 3"
+		//Defect Category-Dataavailability
+	]
+	
+	requirement req7 : "Speed data and the location should be syncronized with the cloud data"
+	[
+		description "The data should be accurate and within the range"
+		issues "Integrity Level 3"
+		//Defect Category-Dataavailability
+	]
+	
+	requirement req8 : "Information is provided in real time" 
+	[
+		description "to achive real time information there should be minimum internval data syncing"
+		value predicate metadata < syn_data
+		issues "Integrity Level 2"
+		//Defect Category-SystemPerformance
+	
+	]
+		
+	requirement req9:"Multi-task perfomance"
+	[
+		description this "multi-thread level Should be intiated to handle multi-task performace"
+		issues "Integrity Level 3"
+		//Defect Category-SystemPerformance
+	]
+]

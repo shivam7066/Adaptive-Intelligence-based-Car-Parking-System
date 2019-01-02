@@ -1,0 +1,11 @@
+global requirements globalreq [
+	requirement req1 : "component"[
+		description "All the components of a adaptive control system should be connected and working."
+		development stakeholder avp.nvp
+	]
+	
+	requirement req2 : "Dataavaliblity"[
+		description "All the vehicle should be able to send and receive data."
+		rationale "Sensors should be there for dataavaliblity"
+		development stakeholder avp.sp
+	]

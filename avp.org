@@ -1,0 +1,8 @@
+organization avp
+stakeholder nvp [
+	full name "Nishi Patel"
+	
+]
+stakeholder sp [
+	full name "Shivam Pandit"
+]

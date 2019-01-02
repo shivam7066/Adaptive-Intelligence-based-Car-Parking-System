@@ -1,0 +1,46 @@
+package smartpark
+
+public
+	with radar;
+	with sensor;
+	with monitor;
+	with EMV2;
+
+	annex behavior_annex {**
+		
+		states
+			ErrorFree: initial state ;
+			FailStopped: state;
+			FailTransient: state;
+			FailUnknown: state;
+			
+		transitions
+			off->[]->on;
+			on-[]->off;
+			on-[]->on_engaged_activating;
+			on_engaged_activating-[]->on_engaged;
+			on_engaged-[]->on_engaged_deactivating;
+			on_engaged_deactivating-[]->on;	
+		
+	**};		
+	annex EMV2
+	{**
+		error types
+			RadarError: type;  --check radar response
+			SensorError : type;  --check sensor errors
+			MonitorError : type extends StatusError;  -- Show monitor status error
+			InfoRequestError: type extends StatusError; ---- Shoews Info request error
+			InternalError : type;  --an internal error was detected
+		end types;
+			error behavior FailStop
+			use types smartparking;
+			events fail: error event;
+			states 
+				working: initial state; 
+				failed : state;
+			transitions
+				working -[fail]-> failed;
+		end behavior;
+	**};
+	end park;
+end smartpark;
